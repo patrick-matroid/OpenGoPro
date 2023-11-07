@@ -61,7 +61,7 @@ class CompoundGoPro(WirelessGoPro):
                 found camera will be connected to).
         """
 
-        super().__init__(target)
+        super().__init__(target, enable_wifi=False)
         self.compound_command = CompoundCommands(self)
 
 
@@ -404,6 +404,8 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
                 Returns:
                     GoProResp: status and url to start livestream
                 """
+
+                # assert (await self._communicator.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)).ok
                 await self._communicator.ble_command.register_livestream_status(
                     register=list(proto.EnumRegisterLiveStreamStatus.DESCRIPTOR.values_by_number.keys()) 
                 )

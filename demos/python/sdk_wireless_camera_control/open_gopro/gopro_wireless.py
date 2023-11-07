@@ -282,7 +282,7 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
         """
         return self._api.http_setting
 
-    async def open(self, timeout: int = 10, retries: int = 5) -> None:
+    async def open(self, timeout: int = 10, retries: int = 1000) -> None:
         """Perform all initialization commands for ble and wifi
 
         For BLE: scan and find device, establish connection, discover characteristics, configure queries
