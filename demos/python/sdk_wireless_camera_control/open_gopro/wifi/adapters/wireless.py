@@ -693,8 +693,14 @@ class NetworksetupWireless(WifiController):
             response = cmd(
                 r"/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport --scan"
             )
-            for result in response.splitlines()[1:]:  # Skip title row
-                if result.split()[0] == ssid:
+            lines = response.splitlines()
+            ssid_end_index = lines[0].index("SSID") + 4 # Find where the SSID column ends
+
+            for result in lines[1:]:  # Skip title row
+                current_ssid = result[:ssid_end_index].strip()
+                if current_ssid == ssid.strip():
+            # for result in response.splitlines()[1:]:  # Skip title row
+            #     if result.split()[0] == ssid:
                     discovered = True
                     break
             if discovered:

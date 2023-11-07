@@ -48,9 +48,9 @@ rich = "^12"
 pexpect = "^4"
 zeroconf = "^0"
 pydantic = "^1"
-opencv-python = { version = "^4", optional = true }
-tk = { version= "^0.1", optional = true }
-Pillow = {version= "^9", optional = true}
+opencv-python = { version = "^4"}
+tk = { version= "^0.1"}
+Pillow = {version= "^9"}
 pytz = "^2023.3"
 tzlocal = "^5.0.1"
 

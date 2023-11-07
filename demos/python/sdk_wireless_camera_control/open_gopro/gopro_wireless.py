@@ -315,11 +315,11 @@ class WirelessGoPro(GoProBase[WirelessApi], GoProWirelessInterface):
             await self._open_ble(timeout, retries)
 
             # Set current dst-aware time
-            assert (
-                await self.ble_command.set_date_time_tz_dst(
-                    **dict(zip(("date_time", "tz_offset", "is_dst"), get_current_dst_aware_time()))
-                )
-            ).ok
+            # assert (
+            #     await self.ble_command.set_date_time_tz_dst(
+            #         **dict(zip(("date_time", "tz_offset", "is_dst"), get_current_dst_aware_time()))
+            #     )
+            # ).ok
 
             # Find and configure API version
             version = (await self.ble_command.get_open_gopro_api_version()).data

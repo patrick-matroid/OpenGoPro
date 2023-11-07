@@ -404,9 +404,8 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
                 Returns:
                     GoProResp: status and url to start livestream
                 """
-                await self._communicator.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
                 await self._communicator.ble_command.register_livestream_status(
-                    register=[proto.EnumRegisterLiveStreamStatus]
+                    register=list(proto.EnumRegisterLiveStreamStatus.DESCRIPTOR.values_by_number.keys()) 
                 )
 
                 await self._communicator.connect_to_access_point(ssid, password)
@@ -415,7 +414,6 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
                 await self._communicator.ble_command.set_livestream_mode(
                     url=url,
                     window_size=window_size,
-                    cert=bytes(),
                     minimum_bitrate=min_bit,
                     maximum_bitrate=max_bit,
                     starting_bitrate=start_bit,
@@ -431,12 +429,14 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
                 self._communicator.register_update(
                     wait_for_livestream_ready, constants.ActionId.LIVESTREAM_STATUS_NOTIF
                 )
-                logger.info("Starting livestream")
-                assert (await self._communicator.ble_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
+                
                 logger.info("Waiting for livestream to be ready...\n")
                 await live_stream_ready.wait()
 
-                assert self._communicator.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
+                logger.info("Starting livestream")
+                assert (await self._communicator.ble_command.set_shutter(shutter=Params.Toggle.ENABLE)).ok
+
+                # assert self._communicator.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)
 
                 return GoProResp(
                     protocol=GoProResp.Protocol.BLE,
