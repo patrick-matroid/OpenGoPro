@@ -405,7 +405,7 @@ class CompoundCommands(Messages[CompoundCommand, str, Union[GoProBle, GoProHttp]
                     GoProResp: status and url to start livestream
                 """
 
-                # assert (await self._communicator.ble_command.set_shutter(shutter=Params.Toggle.DISABLE)).ok
+                
                 await self._communicator.ble_command.register_livestream_status(
                     register=list(proto.EnumRegisterLiveStreamStatus.DESCRIPTOR.values_by_number.keys()) 
                 )
